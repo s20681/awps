@@ -1,5 +1,5 @@
 ## private
-**/src/main/resources/application.properties
+#**/src/main/resources/application.properties
 **/src/main/resources/application-development.properties
 
 HELP.md

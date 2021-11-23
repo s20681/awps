@@ -10,13 +10,16 @@ import java.util.List;
 @Service
 public class UserService{
     UserRepository userRepository;
+    PersonService personService;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PersonService personService) {
         this.userRepository = userRepository;
+        this.personService = personService;
     }
 
     public AppUser save(AppUser appUser){
+        personService.save(appUser.getPerson());
         return userRepository.save(appUser);
     }
 

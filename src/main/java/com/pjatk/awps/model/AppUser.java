@@ -17,6 +17,9 @@ public class AppUser {
     @ManyToOne
     private Group group;
 
+    @OneToOne
+    private Person person;
+
     public AppUser() {
     }
 
@@ -58,5 +61,21 @@ public class AppUser {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

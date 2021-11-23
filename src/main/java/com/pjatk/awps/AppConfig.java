@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @Profile("development")
-@PropertySource("application-development.properties")
+//@PropertySource("application-development.properties")
 public class AppConfig {
     public static void main(String[] args) {
         System.setProperty("spring.config.name", "application-development.properties");

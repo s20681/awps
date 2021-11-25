@@ -1,9 +1,14 @@
 package com.pjatk.awps.controller;
 
+import com.pjatk.awps.model.Destination;
 import com.pjatk.awps.model.Group;
+import com.pjatk.awps.model.PersonalData;
+import com.pjatk.awps.model.enums.Location;
 import com.pjatk.awps.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/group/")
@@ -23,5 +28,16 @@ public class GroupController {
     @GetMapping("get")
     public Group get(){
         return groupService.getSample();
+    }
+
+
+    @GetMapping("getlist")
+    public List<Group> getList(){
+        return groupService.getList();
+    }
+
+    @PostMapping("create")
+    public Group create(@RequestParam Location location, @RequestParam Destination destination, @RequestParam Long userId){
+        return groupService.create(location, destination, userId);
     }
 }

@@ -1,6 +1,7 @@
 package com.pjatk.awps.service;
 
 import com.pjatk.awps.model.AppUser;
+import com.pjatk.awps.model.PersonalData;
 import com.pjatk.awps.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,13 @@ public class UserService{
     }
 
     public AppUser save(AppUser appUser){
+        if(appUser.getPerson() == null){
+            userRepository.save(appUser);
+            appUser.setPerson(new PersonalData());
+        }
+
         personService.save(appUser.getPerson());
+        appUser.getPerson().setAppUser(appUser);
         return userRepository.save(appUser);
     }
 
@@ -27,9 +34,9 @@ public class UserService{
         return userRepository.saveAll(appUserList);
     }
 
-//    public User persist(User user){
-//        ????
-//    }
+    public List<AppUser> getList(){
+        return userRepository.findAll();
+    }
 
     public AppUser getSample(){
         return userRepository.findAll().get(0);

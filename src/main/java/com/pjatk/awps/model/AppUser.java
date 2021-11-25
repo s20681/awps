@@ -18,7 +18,7 @@ public class AppUser {
     private Group group;
 
     @OneToOne
-    private Person person;
+    private PersonalData personalData;
 
     public AppUser() {
     }
@@ -71,11 +71,11 @@ public class AppUser {
         this.id = id;
     }
 
-    public Person getPerson() {
-        return person;
+    public PersonalData getPerson() {
+        return personalData;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPerson(PersonalData personalData) {
+        this.personalData = personalData;
     }
 }

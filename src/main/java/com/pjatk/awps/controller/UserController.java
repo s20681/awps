@@ -5,6 +5,8 @@ import com.pjatk.awps.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user/")
 public class UserController {
@@ -24,4 +26,10 @@ public class UserController {
     public AppUser get(){
         return userService.getSample();
     }
+
+    @GetMapping("getlist")
+    public List<AppUser> getList(){
+        return userService.getList();
+    }
+
 }

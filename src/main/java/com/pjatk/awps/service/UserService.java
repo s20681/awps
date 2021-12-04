@@ -1,5 +1,6 @@
 package com.pjatk.awps.service;
 
+import com.pjatk.awps.exception.ApiException;
 import com.pjatk.awps.exception.ApiRequestException;
 import com.pjatk.awps.model.AppUser;
 import com.pjatk.awps.model.PersonalData;

@@ -22,6 +22,13 @@ public class ApiException extends RuntimeException{
         this.httpStatus = httpStatus;
     }
 
+    public ApiException(String message) {
+        super(message);
+        this.message = super.getMessage();
+        this.throwable = new RuntimeException();
+        this.httpStatus = HttpStatus.BAD_REQUEST;
+    }
+
     @Override
     public String getMessage() {
         return message;

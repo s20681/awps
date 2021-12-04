@@ -29,6 +29,11 @@ public class UserController {
         return userService.login(httpSession, appUser);
     }
 
+    @PostMapping("register")
+    public ResponseEntity<?> register(HttpSession httpSession, @RequestBody AppUser appUser){
+        return userService.register(httpSession, appUser);
+    }
+
     @PostMapping("logout")
     public ResponseEntity<?> logout(HttpSession httpSession){
         return userService.logout(httpSession);

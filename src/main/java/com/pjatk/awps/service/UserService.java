@@ -1,15 +1,14 @@
 package com.pjatk.awps.service;
 
+import com.pjatk.awps.exception.ApiRequestException;
 import com.pjatk.awps.model.AppUser;
 import com.pjatk.awps.model.PersonalData;
 import com.pjatk.awps.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Field;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -25,10 +24,26 @@ public class UserService{
         this.personService = personService;
     }
 
+    public ResponseEntity<?> register(HttpSession httpSession, AppUser appUser){
+        if(appUser.getLogin().isEmpty() || appUser.getPassword().isEmpty() || appUser.getEmail().isEmpty()){
+            throw new ApiRequestException("Login, password and email fields cannot be empty!");
+        }
+
+        if(userRepository.findByLogin(appUser.getLogin()) != null){
+            throw new ApiRequestException("This login already exists!");
+        }
+
+        if(appUser.getPassword().length() < 8){
+            throw new ApiRequestException("Password should be at least 8 characters long.");
+        }
+
+        return ResponseEntity.ok(save(appUser));
+    }
+
     public ResponseEntity<?> login(HttpSession httpSession, AppUser appUser){
         appUser = userRepository.findByLoginAndPassword(appUser.getLogin(), appUser.getPassword());
         if(appUser == null)
-            return ResponseEntity.ok(HttpStatus.NOT_FOUND);
+            throw new ApiRequestException("message here");
         else {
             //should append session only with serializable objects, for further inspection.
             httpSession.setAttribute("user", appUser);

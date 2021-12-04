@@ -4,9 +4,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile("development")
-public class AppConfig {
+@Profile("production")
+public class ProductionAppConfig {
     public static void main(String[] args) {
-        System.setProperty("spring.config.name", "application-development.properties");
+        System.setProperty("spring.config.name", "application-production.properties");
     }
 }

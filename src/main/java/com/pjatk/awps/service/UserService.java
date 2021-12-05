@@ -62,6 +62,9 @@ public class UserService{
     }
 
     public String sessionData(HttpSession httpSession){
+        if(httpSession.isNew()){
+            httpSession.setAttribute("logged_in", false);
+        }
         String output = "";
         Enumeration<String> enums = httpSession.getAttributeNames();
         for (Iterator<String> it = enums.asIterator(); it.hasNext(); ) {

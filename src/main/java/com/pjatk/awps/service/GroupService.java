@@ -1,13 +1,15 @@
 package com.pjatk.awps.service;
 
+import com.pjatk.awps.exception.ApiRequestException;
+import com.pjatk.awps.model.AppUser;
 import com.pjatk.awps.model.Destination;
 import com.pjatk.awps.model.Group;
-import com.pjatk.awps.model.enums.Location;
 import com.pjatk.awps.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -38,8 +40,20 @@ public class GroupService {
         return groupRepository.save(group);
     }
 
-    public Group create(Location location, Destination destination, Long userId){
-        return new Group();
+    public Group create(HttpSession httpSession, Group group){
+        if(httpSession.getAttribute("user") == null){
+            throw new ApiRequestException("You must be logged in to create a new group");
+        }
+        if(group.getName() == null){
+            throw new ApiRequestException("Group name cannot be empty.");
+        }
+
+        if(group.getDestination() == null){
+            throw new ApiRequestException("Destination field cannot be empty");
+        }
+
+        group.getUsers().add((AppUser) httpSession.getAttribute("user"));
+        return group;
     }
 
     public List<Group> getList(){

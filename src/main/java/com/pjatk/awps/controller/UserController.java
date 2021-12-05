@@ -30,13 +30,18 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<?> register(HttpSession httpSession, @RequestBody AppUser appUser){
-        return userService.register(httpSession, appUser);
+    public ResponseEntity<?> register(@RequestBody AppUser appUser){
+        return userService.register(appUser);
     }
 
     @PostMapping("logout")
     public ResponseEntity<?> logout(HttpSession httpSession){
         return userService.logout(httpSession);
+    }
+
+    @GetMapping("{login}")
+    public ResponseEntity<?> getByLogin(@PathVariable String login){
+        return userService.getByLogin(login);
     }
 
     @PostMapping("set")

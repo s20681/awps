@@ -1,6 +1,5 @@
 package com.pjatk.awps.service;
 
-import com.pjatk.awps.exception.ApiException;
 import com.pjatk.awps.exception.ApiRequestException;
 import com.pjatk.awps.model.AppUser;
 import com.pjatk.awps.model.PersonalData;
@@ -25,7 +24,7 @@ public class UserService{
         this.personService = personService;
     }
 
-    public ResponseEntity<?> register(HttpSession httpSession, AppUser appUser){
+    public ResponseEntity<?> register(AppUser appUser){
         if(appUser.getLogin().isEmpty() || appUser.getPassword().isEmpty() || appUser.getEmail().isEmpty()){
             throw new ApiRequestException("Login, password and email fields cannot be empty!");
         }
@@ -44,7 +43,7 @@ public class UserService{
     public ResponseEntity<?> login(HttpSession httpSession, AppUser appUser){
         appUser = userRepository.findByLoginAndPassword(appUser.getLogin(), appUser.getPassword());
         if(appUser == null)
-            throw new ApiRequestException("message here");
+            throw new ApiRequestException("No such user");
         else {
             //should append session only with serializable objects, for further inspection.
             httpSession.setAttribute("user", appUser);
@@ -87,6 +86,14 @@ public class UserService{
         personService.save(appUser.getPerson());
         appUser.getPerson().setAppUser(appUser);
         return userRepository.save(appUser);
+    }
+
+    public ResponseEntity<?> getByLogin(String login){
+        AppUser appUser = userRepository.findByLogin(login);
+        if(appUser == null){
+            throw new ApiRequestException("Login not found.");
+        }
+        return ResponseEntity.ok(userRepository.findByLogin(login));
     }
 
     public List<AppUser> saveAll(List<AppUser> appUserList){

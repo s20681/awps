@@ -8,6 +8,8 @@ import com.pjatk.awps.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.Servlet;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -37,7 +39,7 @@ public class GroupController {
     }
 
     @PostMapping("create")
-    public Group create(@RequestParam Location location, @RequestParam Destination destination, @RequestParam Long userId){
-        return groupService.create(location, destination, userId);
+    public Group create(HttpSession httpSession, @RequestBody Group group){
+        return groupService.create(httpSession, group);
     }
 }

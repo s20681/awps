@@ -3,6 +3,7 @@ package com.pjatk.awps.model;
 import com.pjatk.awps.model.enums.Location;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "usergroup")
@@ -11,6 +12,8 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    private String name;
 
     @OneToOne
     Schedule schedule;
@@ -21,7 +24,7 @@ public class Group {
     Location location;
 
     @OneToMany
-    private List<AppUser> appUsers;
+    private List<AppUser> appUsers = new ArrayList<>();
 
     public Group() {
     }
@@ -32,6 +35,14 @@ public class Group {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Schedule getSchedule() {

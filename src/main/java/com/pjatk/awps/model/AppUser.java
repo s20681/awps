@@ -9,18 +9,53 @@ public class AppUser {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    private String name;
+    private String surname;
+    @OneToOne
+    private Address address;
+    private long phone;
     private String login;
     private String password;
     private String email;
-    private String avatarUrl;
 
-    @ManyToOne
-    private Group group;
+    public Long getId() {
+        return id;
+    }
 
-    @OneToOne
-    private PersonalData personalData;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public AppUser() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(long phone) {
+        this.phone = phone;
     }
 
     public String getLogin() {
@@ -45,37 +80,5 @@ public class AppUser {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public PersonalData getPerson() {
-        return personalData;
-    }
-
-    public void setPerson(PersonalData personalData) {
-        this.personalData = personalData;
     }
 }

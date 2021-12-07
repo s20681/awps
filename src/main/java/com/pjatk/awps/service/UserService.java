@@ -2,7 +2,7 @@ package com.pjatk.awps.service;
 
 import com.pjatk.awps.exception.ApiRequestException;
 import com.pjatk.awps.model.AppUser;
-import com.pjatk.awps.model.PersonalData;
+import com.pjatk.awps.model.Address;
 import com.pjatk.awps.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -81,13 +81,13 @@ public class UserService{
             return null;
         }
 
-        if(appUser.getPerson() == null){
+        if(appUser.getAddress() == null){
             userRepository.save(appUser);
-            appUser.setPerson(new PersonalData());
+            appUser.setAddress(new Address());
         }
 
-        personService.save(appUser.getPerson());
-        appUser.getPerson().setAppUser(appUser);
+        personService.save(appUser.getAddress());
+        appUser.getAddress().setAppUser(appUser);
         return userRepository.save(appUser);
     }
 

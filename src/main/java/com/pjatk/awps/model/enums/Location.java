@@ -1,6 +1,7 @@
 package com.pjatk.awps.model.enums;
 
 public enum Location {
+    None,
     Aniołki,
     Brętowo,
     Brzeźno,

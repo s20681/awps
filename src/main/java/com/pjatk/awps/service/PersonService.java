@@ -1,6 +1,6 @@
 package com.pjatk.awps.service;
 
-import com.pjatk.awps.model.PersonalData;
+import com.pjatk.awps.model.Address;
 import com.pjatk.awps.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,14 +14,14 @@ public class PersonService {
         this.PersonRepository = PersonRepository;
     }
 
-    public PersonalData save(PersonalData personalData){
-        if(personalData == null){
-            personalData = new PersonalData();
+    public Address save(Address address){
+        if(address == null){
+            address = new Address();
         }
-        return PersonRepository.save(personalData);
+        return PersonRepository.save(address);
     }
 
-    public PersonalData getSample(){
+    public Address getSample(){
         return PersonRepository.findAll().get(0);
     }
 }

@@ -1,14 +1,10 @@
 package com.pjatk.awps.controller;
 
-import com.pjatk.awps.model.Destination;
 import com.pjatk.awps.model.Group;
-import com.pjatk.awps.model.PersonalData;
-import com.pjatk.awps.model.enums.Location;
 import com.pjatk.awps.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.Servlet;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 

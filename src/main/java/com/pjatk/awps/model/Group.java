@@ -26,6 +26,8 @@ public class Group {
     @OneToMany
     private List<AppUser> appUsers = new ArrayList<>();
 
+    //Tutaj słownik user - rola (pasażer / kierowca)
+
     public Group() {
     }
 

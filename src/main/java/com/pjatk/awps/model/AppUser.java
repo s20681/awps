@@ -18,6 +18,24 @@ public class AppUser {
     private String password;
     private String email;
 
+    public AppUser() {
+    }
+
+    public AppUser(String login) {
+        this.login = login;
+    }
+
+    public AppUser(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
+    public AppUser(String login, String password, String email) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }

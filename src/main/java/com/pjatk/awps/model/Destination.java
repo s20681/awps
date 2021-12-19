@@ -1,8 +1,5 @@
 package com.pjatk.awps.model;
 
-import com.pjatk.awps.model.enums.DestinationType;
-import com.pjatk.awps.model.enums.Location;
-
 import javax.persistence.*;
 
 @Table(name = "destination")
@@ -14,8 +11,8 @@ public class Destination {
     private Long id;
 
     private String name;
-    private Enum<Location> locationEnum;
-    private Enum<DestinationType> destinationTypeEnum;
+    private double latitude;
+    private double longitude;
 
     public Destination() {
     }
@@ -36,19 +33,19 @@ public class Destination {
         this.name = name;
     }
 
-    public Enum<Location> getLocationEnum() {
-        return locationEnum;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLocationEnum(Enum<Location> locationEnum) {
-        this.locationEnum = locationEnum;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public Enum<DestinationType> getDestinationTypeEnum() {
-        return destinationTypeEnum;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setDestinationTypeEnum(Enum<DestinationType> destinationTypeEnum) {
-        this.destinationTypeEnum = destinationTypeEnum;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

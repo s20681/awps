@@ -1,5 +1,7 @@
 package com.pjatk.awps.model;
 
+import com.pjatk.awps.model.enums.Role;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +19,7 @@ public class AppUser {
     private String login;
     private String password;
     private String email;
+    private Role defaultRole;
 
     public AppUser() {
     }

@@ -12,16 +12,17 @@ import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService{
     UserRepository userRepository;
-    PersonService personService;
+    AddressService addressService;
 
     @Autowired
-    public UserService(UserRepository userRepository, PersonService personService) {
+    public UserService(UserRepository userRepository, AddressService addressService) {
         this.userRepository = userRepository;
-        this.personService = personService;
+        this.addressService = addressService;
     }
 
     public ResponseEntity<?> register(AppUser appUser){
@@ -86,7 +87,7 @@ public class UserService{
             appUser.setAddress(new Address());
         }
 
-        personService.save(appUser.getAddress());
+        addressService.save(appUser.getAddress());
         appUser.getAddress().setAppUser(appUser);
         return userRepository.save(appUser);
     }
@@ -97,6 +98,14 @@ public class UserService{
             throw new ApiRequestException("Login not found.");
         }
         return ResponseEntity.ok(userRepository.findByLogin(login));
+    }
+
+    public AppUser getById(Long userId){
+        Optional<AppUser> appUser = userRepository.findById(userId);
+        if(appUser.isEmpty()){
+            throw new ApiRequestException("Login not found.");
+        }
+        return appUser.get();
     }
 
     public List<AppUser> saveAll(List<AppUser> appUserList){

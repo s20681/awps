@@ -1,9 +1,10 @@
 package com.pjatk.awps.repository;
 
-import com.pjatk.awps.model.Address;
+import com.pjatk.awps.model.Destination;
+import com.pjatk.awps.model.Transit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PersonRepository extends JpaRepository<Address, Long> {
+public interface TransitRepository extends JpaRepository<Transit, Long> {
 }

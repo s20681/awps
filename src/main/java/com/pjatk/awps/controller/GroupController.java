@@ -18,24 +18,36 @@ public class GroupController {
         this.groupService = groupService;
     }
 
-    @PostMapping("set")
-    public Group set(@RequestBody Group group){
-        return groupService.save(group);
-    }
 
-    @GetMapping("get")
-    public Group get(){
-        return groupService.getSample();
-    }
-
-
-    @GetMapping("getlist")
-    public List<Group> getList(){
-        return groupService.getList();
+    @PostMapping("/")
+    public Group get(HttpSession httpSession, @RequestParam Long groupId){
+        return groupService.get(httpSession, groupId);
     }
 
     @PostMapping("create")
     public Group create(HttpSession httpSession, @RequestBody Group group){
         return groupService.create(httpSession, group);
     }
+
+    @PostMapping("/join")
+    public Group join(HttpSession httpSession, @RequestParam Long groupId){
+        return groupService.join(httpSession, groupId);
+    }
+
+    @PostMapping("set")
+    public Group set(@RequestBody Group group){
+        return groupService.save(group);
+    }
+
+    @GetMapping("get")
+    public Group getSample(){
+        return groupService.getSample();
+    }
+
+    @GetMapping("getlist")
+    public List<Group> getList(){
+        return groupService.getList();
+    }
+
+
 }

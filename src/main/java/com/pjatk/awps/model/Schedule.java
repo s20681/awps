@@ -1,7 +1,9 @@
 package com.pjatk.awps.model;
 
 import javax.persistence.*;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Table(name = "schedule")
 @Entity
@@ -11,8 +13,8 @@ public class Schedule {
     @Column(name = "id", nullable = false)
     private Long id;
 
-//    @ElementCollection
-//    private Map<AppUser, Integer> userToWeekMapping;
+    @ElementCollection
+    List<Date> dates = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -21,7 +23,16 @@ public class Schedule {
     public void setId(Long id) {
         this.id = id;
     }
-//
+
+    public List<Date> getDates() {
+        return dates;
+    }
+
+    public void setDates(List<Date> dates) {
+        this.dates = dates;
+    }
+
+    //
 //    public Map<AppUser, Integer> getUserToWeekMapping() {
 //        return userToWeekMapping;
 //    }

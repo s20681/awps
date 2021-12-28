@@ -1,10 +1,13 @@
 package com.pjatk.awps.model;
 
 import com.pjatk.awps.model.enums.Location;
+import com.pjatk.awps.model.enums.Role;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity(name = "usergroup")
 public class Group {
@@ -21,12 +24,16 @@ public class Group {
     @OneToOne
     Destination destination;
 
+    @ManyToOne
+    Transit transit;
+
     Location location;
 
     @OneToMany
     private List<AppUser> appUsers = new ArrayList<>();
 
-    //Tutaj słownik user - rola (pasażer / kierowca)
+    @ElementCollection
+    private Map<Long, Role> roleMap = new HashMap<>();
 
     public Group() {
     }
@@ -55,14 +62,6 @@ public class Group {
         this.schedule = schedule;
     }
 
-    public List<AppUser> getUsers() {
-        return appUsers;
-    }
-
-    public void setUsers(List<AppUser> appUsers) {
-        this.appUsers = appUsers;
-    }
-
     public Destination getDestination() {
         return destination;
     }
@@ -71,11 +70,35 @@ public class Group {
         this.destination = destination;
     }
 
+    public Transit getTransit() {
+        return transit;
+    }
+
+    public void setTransit(Transit transit) {
+        this.transit = transit;
+    }
+
     public Location getLocation() {
         return location;
     }
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public List<AppUser> getAppUsers() {
+        return appUsers;
+    }
+
+    public void setAppUsers(List<AppUser> appUsers) {
+        this.appUsers = appUsers;
+    }
+
+    public Map<Long, Role> getRoleMap() {
+        return roleMap;
+    }
+
+    public void setRoleMap(Map<Long, Role> roleMap) {
+        this.roleMap = roleMap;
     }
 }

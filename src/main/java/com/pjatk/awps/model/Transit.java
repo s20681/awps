@@ -1,23 +1,23 @@
 package com.pjatk.awps.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Transit {
     @Id
     @GeneratedValue
-    Long id;
-
-    @ManyToMany
-    List<Address> address;
-    boolean isValid;
-
-    @OneToOne
-    Schedule schedule;
+    private Long id;
 
     @OneToMany
-    List<Group> group;
+    private List<TransitUser> transitUsers = new ArrayList<>();
+
+    @ElementCollection
+    private List<LocalDateTime> schedule = new ArrayList<>();
+
+    private byte seats = 5;
 
     public Long getId() {
         return id;
@@ -27,35 +27,27 @@ public class Transit {
         this.id = id;
     }
 
-    public List<Address> getAddress() {
-        return address;
+    public List<TransitUser> getTransitUsers() {
+        return transitUsers;
     }
 
-    public void setAddress(List<Address> address) {
-        this.address = address;
+    public void setTransitUsers(List<TransitUser> transitUsers) {
+        this.transitUsers = transitUsers;
     }
 
-    public boolean isValid() {
-        return isValid;
-    }
-
-    public void setValid(boolean valid) {
-        isValid = valid;
-    }
-
-    public Schedule getSchedule() {
+    public List<LocalDateTime> getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(Schedule schedule) {
+    public void setSchedule(List<LocalDateTime> schedule) {
         this.schedule = schedule;
     }
 
-    public List<Group> getGroup() {
-        return group;
+    public byte getSeats() {
+        return seats;
     }
 
-    public void setGroup(List<Group> group) {
-        this.group = group;
+    public void setSeats(byte seats) {
+        this.seats = seats;
     }
 }

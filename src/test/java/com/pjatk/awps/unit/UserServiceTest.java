@@ -1,6 +1,6 @@
 package com.pjatk.awps.unit;
 
-import com.pjatk.awps.model.AppUser;
+import com.pjatk.awps.model.Person;
 import com.pjatk.awps.repository.UserRepository;
 import com.pjatk.awps.service.AddressService;
 import com.pjatk.awps.service.UserService;
@@ -26,38 +26,38 @@ class UserServiceTest {
     @Test
     void shouldCreateAddress(){
         //GIVEN
-        AppUser appUser = new AppUser("username");
+        Person person = new Person("username");
 
         //WHEN
-        userService.save(appUser);
+        userService.save(person);
 
         //THEN
-        assertThat(appUser.getAddress() != null);
+        assertThat(person.getAddress() != null);
     }
 
     @Test
     void shouldCheckLoginBeforeRegister(){
         //GIVEN
-        AppUser appUser = new AppUser("user", "password", "w@wp.pl");
+        Person person = new Person("user", "password");
 
         //WHEN
-        userService.register(appUser);
+        userService.register(person);
 
         //THEN
-        verify(userRepository).save(appUser);
+        verify(userRepository).save(person);
     }
 
     @Test
     @Disabled
     void shouldRegister(){
         //GIVEN
-        AppUser appUser = new AppUser("user", "password", "w@wp.pl");
+        Person person = new Person("user", "password");
 
         //WHEN
-        userService.register(appUser);
+        userService.register(person);
 
         //THEN
-        verify(userRepository).save(appUser);
+        verify(userRepository).save(person);
     }
 
 }

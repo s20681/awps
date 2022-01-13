@@ -1,6 +1,6 @@
 package com.pjatk.awps.controller;
 
-import com.pjatk.awps.model.AppUser;
+import com.pjatk.awps.model.Person;
 import com.pjatk.awps.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +25,13 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<?> login(HttpSession httpSession, @RequestBody AppUser appUser){
-        return userService.login(httpSession, appUser);
+    public ResponseEntity<?> login(HttpSession httpSession, @RequestBody Person person){
+        return userService.login(httpSession, person);
     }
 
     @PostMapping("register")
-    public ResponseEntity<?> register(@RequestBody AppUser appUser){
-        return userService.register(appUser);
+    public ResponseEntity<?> register(@RequestBody Person person){
+        return userService.register(person);
     }
 
     @PostMapping("logout")
@@ -45,17 +45,17 @@ public class UserController {
     }
 
     @PostMapping("set")
-    public AppUser set(@RequestBody AppUser appUser){
-        return userService.save(appUser);
+    public Person set(@RequestBody Person person){
+        return userService.save(person);
     }
 
     @GetMapping("get")
-    public AppUser get(){
+    public Person get(){
         return userService.getSample();
     }
 
     @GetMapping("getlist")
-    public List<AppUser> getList(){
+    public List<Person> getList(){
         return userService.getList();
     }
 

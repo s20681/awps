@@ -1,7 +1,5 @@
 package com.pjatk.awps.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,9 +9,11 @@ public class Address {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne
-    @JsonIgnore
-    private AppUser appUser;
+    private String name;
+
+//    @OneToOne
+//    @JsonIgnore
+//    private AppUser appUser;
 
     private String street;
     private int streetNo;
@@ -28,12 +28,12 @@ public class Address {
         this.id = id;
     }
 
-    public AppUser getAppUser() {
-        return appUser;
+    public String getName() {
+        return name;
     }
 
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getStreet() {

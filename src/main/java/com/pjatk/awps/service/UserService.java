@@ -1,7 +1,7 @@
 package com.pjatk.awps.service;
 
 import com.pjatk.awps.exception.ApiRequestException;
-import com.pjatk.awps.model.AppUser;
+import com.pjatk.awps.model.Person;
 import com.pjatk.awps.model.Address;
 import com.pjatk.awps.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,8 @@ import java.util.Optional;
 
 @Service
 public class UserService{
-    UserRepository userRepository;
-    AddressService addressService;
+    private final UserRepository userRepository;
+    private final AddressService addressService;
 
     @Autowired
     public UserService(UserRepository userRepository, AddressService addressService) {
@@ -25,33 +25,37 @@ public class UserService{
         this.addressService = addressService;
     }
 
-    public ResponseEntity<?> register(AppUser appUser){
-        if(appUser.getLogin().isEmpty() || appUser.getPassword().isEmpty() || appUser.getEmail().isEmpty()){
+    public Optional<Person> findById(Long id){
+        return userRepository.findById(id);
+    }
+
+    public ResponseEntity<?> register(Person person){
+        if(person.getLogin().isEmpty() || person.getPassword().isEmpty()){
             throw new ApiRequestException("Login, password and email fields cannot be empty!");
         }
 
-        if(userRepository.findByLogin(appUser.getLogin()) != null){
+        if(userRepository.findByLogin(person.getLogin()) != null){
             throw new ApiRequestException("This login already exists!");
         }
 
-        if(appUser.getPassword().length() < 8){
+        if(person.getPassword().length() < 8){
             throw new ApiRequestException("Password should be at least 8 characters long.");
         }
 
-        return ResponseEntity.ok(save(appUser));
+        return ResponseEntity.ok(save(person));
     }
 
-    public ResponseEntity<?> login(HttpSession httpSession, AppUser appUser){
-        appUser = userRepository.findByLoginAndPassword(appUser.getLogin(), appUser.getPassword());
-        if(appUser == null)
+    public ResponseEntity<?> login(HttpSession httpSession, Person person){
+        person = userRepository.findByLoginAndPassword(person.getLogin(), person.getPassword());
+        if(person == null)
             throw new ApiRequestException("No such user");
         else {
             //should append session only with serializable objects, for further inspection.
-            httpSession.setAttribute("user", appUser);
-            httpSession.setAttribute("userid", appUser.getId());
+            httpSession.setAttribute("user", person);
+            httpSession.setAttribute("userid", person.getId());
             httpSession.setAttribute("logged_in", true);
 
-            return ResponseEntity.ok(appUser);
+            return ResponseEntity.ok(person);
         }
     }
 
@@ -76,47 +80,46 @@ public class UserService{
         return output;
     }
 
-    public AppUser save(AppUser appUser){
-        if(userRepository.findByLogin(appUser.getLogin()) != null){
+    public Person save(Person person){
+        if(userRepository.findByLogin(person.getLogin()) != null){
             System.err.println("USER LOGIN ALREADY TAKEN!");
             return null;
         }
 
-        if(appUser.getAddress() == null){
-            userRepository.save(appUser);
-            appUser.setAddress(new Address());
+        else if(person.getAddress() == null){
+            userRepository.save(person);
+            person.setAddress(new Address());
         }
 
-        addressService.save(appUser.getAddress());
-        appUser.getAddress().setAppUser(appUser);
-        return userRepository.save(appUser);
+        addressService.save(person.getAddress());
+        return userRepository.save(person);
     }
 
     public ResponseEntity<?> getByLogin(String login){
-        AppUser appUser = userRepository.findByLogin(login);
-        if(appUser == null){
+        Person person = userRepository.findByLogin(login);
+        if(person == null){
             throw new ApiRequestException("Login not found.");
         }
         return ResponseEntity.ok(userRepository.findByLogin(login));
     }
 
-    public AppUser getById(Long userId){
-        Optional<AppUser> appUser = userRepository.findById(userId);
+    public Person getById(Long userId){
+        Optional<Person> appUser = userRepository.findById(userId);
         if(appUser.isEmpty()){
             throw new ApiRequestException("Login not found.");
         }
         return appUser.get();
     }
 
-    public List<AppUser> saveAll(List<AppUser> appUserList){
-        return userRepository.saveAll(appUserList);
+    public List<Person> saveAll(List<Person> personList){
+        return userRepository.saveAll(personList);
     }
 
-    public List<AppUser> getList(){
+    public List<Person> getList(){
         return userRepository.findAll();
     }
 
-    public AppUser getSample(){
+    public Person getSample(){
         return userRepository.findAll().get(0);
     }
 }

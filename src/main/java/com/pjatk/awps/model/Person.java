@@ -1,11 +1,9 @@
 package com.pjatk.awps.model;
 
-import com.pjatk.awps.model.enums.Role;
-
 import javax.persistence.*;
 
 @Entity
-public class AppUser {
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -18,25 +16,17 @@ public class AppUser {
     private long phone;
     private String login;
     private String password;
-    private String email;
-    private Role defaultRole;
 
-    public AppUser() {
+    public Person() {
     }
 
-    public AppUser(String login) {
+    public Person(String login) {
         this.login = login;
     }
 
-    public AppUser(String login, String password) {
+    public Person(String login, String password) {
         this.login = login;
         this.password = password;
-    }
-
-    public AppUser(String login, String password, String email) {
-        this.login = login;
-        this.password = password;
-        this.email = email;
     }
 
     public Long getId() {
@@ -95,11 +85,4 @@ public class AppUser {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

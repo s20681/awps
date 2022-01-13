@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class AddressService {
-    AddressRepository addressRepository;
+    private final AddressRepository addressRepository;
 
     @Autowired
     public AddressService(AddressRepository addressRepository) {
@@ -29,14 +29,6 @@ public class AddressService {
 
     public List<Address> getList() {
         return addressRepository.findAll();
-    }
-
-    public ResponseEntity<Address> create(HttpSession httpSession, Address address) {
-        if(httpSession.getAttribute("user") == null){
-            throw new ApiRequestException("You must be logged in to create a new address");
-        }
-
-        return ResponseEntity.ok(save(address));
     }
 
     public ResponseEntity<List<Address>> find(HttpSession httpSession, Address address){

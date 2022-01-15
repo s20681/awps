@@ -64,7 +64,8 @@ public class TransitService {
         transitRepository.delete(findById(id));
     }
 
-    public ResponseEntity<Transit> addUser(Long transitId, Long personId, Role role){
+    public ResponseEntity<Transit> addUser(Long transitId, Long personId, String stringRole){
+        Role role = Role.valueOf(stringRole.toUpperCase());
         Optional<Transit> optionalTransit = transitRepository.findById(transitId);
         if(optionalTransit.isPresent()){
             Transit transit = optionalTransit.get();

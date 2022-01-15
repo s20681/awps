@@ -36,7 +36,7 @@ public class TransitController {
     }
 
     @PostMapping("adduser")
-    public ResponseEntity<Transit> addUser(@RequestParam Long transitId, @RequestParam Long personId, @RequestParam Role role){
+    public ResponseEntity<Transit> addUser(@RequestParam Long transitId, @RequestParam Long personId, @RequestParam String role){
         return transitService.addUser(transitId, personId, role);
     }
 

@@ -13,7 +13,6 @@ public class TransitAddress {
     @GeneratedValue
     private Long id;
 
-    @JsonIgnore
     @ManyToOne
     Transit transit;
 
@@ -28,8 +27,8 @@ public class TransitAddress {
         this.id = id;
     }
 
-    public Transit getTransit() {
-        return transit;
+    public Long getTransitId() {
+        return transit.getId();
     }
 
     public void setTransit(Transit transit) {

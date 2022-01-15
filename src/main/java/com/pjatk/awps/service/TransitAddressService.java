@@ -43,7 +43,7 @@ public class TransitAddressService {
         List<TransitAddress> transitAddresses = new ArrayList<>();
         for (TransitAddress t :
                 findAll()) {
-            if(t.getTransit().getId().equals(transitId)){
+            if(t.getTransitId().equals(transitId)){
                 transitAddresses.add(t);
             }
         }

@@ -15,7 +15,6 @@ public class TransitUser {
     private Long id;
 
     @ManyToOne
-    @JsonIgnore
     Transit transit;
 
     private Long personId;
@@ -45,8 +44,8 @@ public class TransitUser {
         this.role = role;
     }
 
-    public Transit getTransit() {
-        return transit;
+    public Long getTransitId() {
+        return transit.getId();
     }
 
     public void setTransit(Transit transit) {

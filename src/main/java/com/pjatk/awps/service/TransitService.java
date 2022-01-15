@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,7 +82,9 @@ public class TransitService {
 
             Person person = userService.findById(personId).get();
             TransitUser transitUser = transitUserService.make(transit, person, role);
+            TransitAddress transitAddress = transitAddressService.make(transit, person.getAddress());
             transit.getTransitUsers().add(transitUser);
+            transit.getTransitAddresses().add(transitAddress);
             transitRepository.save(transit);
             return ResponseEntity.ok(transit);
         }
@@ -110,8 +111,9 @@ public class TransitService {
                 }
             }
 
-
             Optional<Person> optionalPerson = userService.findById((Long) httpSession.getAttribute("userid"));
+            System.err.println(optionalPerson.get().getId());
+            System.err.println(optionalPerson.get().getAddress());
             if(optionalTransit.isPresent()){
                 Person person = optionalPerson.get();
                 transitUser = transitUserService.make(transit, person, roleEnum);
@@ -120,6 +122,8 @@ public class TransitService {
                 throw new ApiRequestException("Person does not exist ? ");
 
             transit.getTransitUsers().add(transitUser);
+            transit.getTransitAddresses().add(transitAddress);
+            save(transit);
             return ResponseEntity.ok(transit);
         }
         return ResponseEntity.ok("Another error. Are you logged in?");
@@ -134,12 +138,23 @@ public class TransitService {
             for (TransitUser t :
                     transit.getTransitUsers()) {
                 if (t.getPersonId().equals(person.getId())) {
-                    transitUserService.delete(t);
                     transit.getTransitUsers().remove(t);
+                    transitUserService.delete(t);
                     save(transit);
-                    return ResponseEntity.ok(transit);
+                    break;
                 }
             }
+
+            for (TransitAddress a :
+                    transit.getTransitAddresses()) {
+                if (a.getAddress().equals(person.getAddress())) {
+                    transit.getTransitAddresses().remove(a);
+                    transitAddressService.delete(a.getId());
+                    save(transit);
+                    break;
+                }
+            }
+            return ResponseEntity.ok(transit);
         }
         throw new ApiRequestException("Something went wrong");
     }

@@ -1,5 +1,7 @@
 package com.pjatk.awps.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +15,9 @@ public class Transit {
 
     @OneToMany
     private List<TransitUser> transitUsers = new ArrayList<>();
+
+    @OneToMany
+    private List<TransitAddress> transitAddresses = new ArrayList<>();
 
     @ElementCollection
     private List<LocalDateTime> schedule = new ArrayList<>();
@@ -33,6 +38,14 @@ public class Transit {
 
     public void setTransitUsers(List<TransitUser> transitUsers) {
         this.transitUsers = transitUsers;
+    }
+
+    public List<TransitAddress> getTransitAddresses() {
+        return transitAddresses;
+    }
+
+    public void setTransitAddresses(List<TransitAddress> transitAddresses) {
+        this.transitAddresses = transitAddresses;
     }
 
     public List<LocalDateTime> getSchedule() {

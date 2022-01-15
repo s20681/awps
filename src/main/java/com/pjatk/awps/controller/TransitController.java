@@ -40,7 +40,7 @@ public class TransitController {
         return transitService.addUser(transitId, personId, role);
     }
 
-    @PostMapping("get")
+    @GetMapping("get")
     public ResponseEntity<Transit> getTransit(@RequestParam Long transitId){
         return ResponseEntity.ok(transitService.findById(transitId));
     }

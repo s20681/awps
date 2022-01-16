@@ -1,7 +1,6 @@
 package com.pjatk.awps.controller;
 
 import com.pjatk.awps.model.Transit;
-import com.pjatk.awps.model.enums.Role;
 import com.pjatk.awps.service.TransitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

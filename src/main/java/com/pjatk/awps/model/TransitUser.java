@@ -1,6 +1,5 @@
 package com.pjatk.awps.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pjatk.awps.model.enums.Role;
 
 import javax.persistence.Entity;

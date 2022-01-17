@@ -1,10 +1,7 @@
 package com.pjatk.awps.service;
 
 import com.pjatk.awps.exception.ApiRequestException;
-import com.pjatk.awps.model.Person;
-import com.pjatk.awps.model.Transit;
-import com.pjatk.awps.model.TransitAddress;
-import com.pjatk.awps.model.TransitUser;
+import com.pjatk.awps.model.*;
 import com.pjatk.awps.model.enums.Role;
 import com.pjatk.awps.repository.TransitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +11,22 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class TransitService {
     private final TransitRepository transitRepository;
     private final UserService userService;
+    private final AddressService addressService;
     private final TransitUserService transitUserService;
     private final TransitAddressService transitAddressService;
 
     @Autowired
-    public TransitService(TransitRepository transitRepository, UserService userService, TransitUserService transitUserService, TransitAddressService transitAddressService) {
+    public TransitService(TransitRepository transitRepository, UserService userService, AddressService addressService, TransitUserService transitUserService, TransitAddressService transitAddressService) {
         this.transitRepository = transitRepository;
         this.userService = userService;
+        this.addressService = addressService;
         this.transitUserService = transitUserService;
         this.transitAddressService = transitAddressService;
     }
@@ -167,5 +167,62 @@ public class TransitService {
         }
 
         throw new ApiRequestException("Transit does not exist ? ");
+    }
+
+    public ResponseEntity<Transit> removeUser(Long transitId, Long transitUserId) {
+        Optional<Transit> optionalTransit = transitRepository.findById(transitId);
+        if(optionalTransit.isPresent()){
+            Transit transit = optionalTransit.get();
+            for (TransitUser t :
+                    transit.getTransitUsers()) {
+                if (t.getId() == transitUserId) {
+                    transit.getTransitUsers().remove(t);
+                    save(transit);
+                    break;
+                }
+
+            }
+            return ResponseEntity.ok(transit);
+        }
+        throw new ApiRequestException("transit id or transitUserId wrong");
+    }
+
+    public ResponseEntity<Transit> addAddress(Long transitId, Long addressId) {
+        Optional<Transit> optionalTransit = transitRepository.findById(transitId);
+        if(optionalTransit.isPresent()){
+            Transit transit = optionalTransit.get();
+            for (TransitAddress t :
+                    transit.getTransitAddresses()) {
+                if (Objects.equals(t.getAddress().getId(), addressId)) {
+                    throw new ApiRequestException("Address already in");
+                }
+            }
+            Optional<Address> optionalAddress = addressService.findById(addressId);
+            if(optionalAddress.isPresent()){
+                TransitAddress transitAddress = transitAddressService.make(transit, optionalAddress.get());
+                transitAddressService.save(transitAddress);
+                transit.getTransitAddresses().add(transitAddress);
+                save(transit);
+                return ResponseEntity.ok(transit);
+            }
+            throw new ApiRequestException("address id is wrong. (or something else)");
+
+        }
+        throw new ApiRequestException("transit id is wrong. (or something else)");
+    }
+
+    public ResponseEntity<Transit> removeAddress(Long transitId, Long addressId) {
+        Transit transit = findById(transitId);
+        for (TransitAddress t:
+             transit.getTransitAddresses()) {
+            if(t.getAddress().getId().equals(addressId)){
+                transit.getTransitAddresses().remove(t);
+                transitAddressService.delete(t.getId());
+                save(transit);
+
+                return ResponseEntity.ok(transit);
+            }
+        }
+        throw new ApiRequestException("are you sure the address was there?");
     }
 }

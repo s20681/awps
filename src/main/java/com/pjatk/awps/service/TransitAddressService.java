@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransitAddressService {
@@ -49,5 +50,9 @@ public class TransitAddressService {
         }
 
         return transitAddresses;
+    }
+
+    public Optional<TransitAddress> findById(Long addressId) {
+        return transitAddressRepository.findById(addressId);
     }
 }

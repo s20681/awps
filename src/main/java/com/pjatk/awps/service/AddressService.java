@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AddressService {
@@ -46,5 +47,9 @@ public class AddressService {
         }
 
         return ResponseEntity.ok(addressesFitting);
+    }
+
+    public Optional<Address> findById(Long addressId) {
+        return addressRepository.findById(addressId);
     }
 }

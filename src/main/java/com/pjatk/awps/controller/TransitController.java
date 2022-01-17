@@ -39,6 +39,21 @@ public class TransitController {
         return transitService.addUser(transitId, personId, role);
     }
 
+    @PostMapping("removeuser")
+    public ResponseEntity<Transit> removeUser(@RequestParam Long transitId, @RequestParam Long transitUserId){
+        return transitService.removeUser(transitId, transitUserId);
+    }
+
+    @PostMapping("addaddress")
+    public ResponseEntity<Transit> addAddress(@RequestParam Long transitId, @RequestParam Long addressId){
+        return transitService.addAddress(transitId, addressId);
+    }
+
+    @PostMapping("removeaddress")
+    public ResponseEntity<Transit> removeAddress(@RequestParam Long transitId, @RequestParam Long addressId){
+        return transitService.removeAddress(transitId, addressId);
+    }
+
     @GetMapping("get")
     public ResponseEntity<Transit> getTransit(@RequestParam Long transitId){
         return ResponseEntity.ok(transitService.findById(transitId));

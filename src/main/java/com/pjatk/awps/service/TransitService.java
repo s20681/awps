@@ -148,7 +148,7 @@ public class TransitService {
 
             for (TransitAddress a :
                     transit.getTransitAddresses()) {
-                if (a.getAddress().equals(person.getAddress())) {
+                if (a.getAddressId().equals(person.getAddress().getId())) {
                     transit.getTransitAddresses().remove(a);
                     transitAddressService.delete(a.getId());
                     save(transit);
@@ -193,7 +193,7 @@ public class TransitService {
             Transit transit = optionalTransit.get();
             for (TransitAddress t :
                     transit.getTransitAddresses()) {
-                if (Objects.equals(t.getAddress().getId(), addressId)) {
+                if (Objects.equals(t.getAddressId(), addressId)) {
                     throw new ApiRequestException("Address already in");
                 }
             }
@@ -215,7 +215,7 @@ public class TransitService {
         Transit transit = findById(transitId);
         for (TransitAddress t:
              transit.getTransitAddresses()) {
-            if(t.getAddress().getId().equals(addressId)){
+            if(t.getAddressId().equals(addressId)){
                 transit.getTransitAddresses().remove(t);
                 transitAddressService.delete(t.getId());
                 save(transit);

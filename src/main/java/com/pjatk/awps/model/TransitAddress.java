@@ -14,8 +14,7 @@ public class TransitAddress {
     @ManyToOne
     Transit transit;
 
-    @ManyToOne
-    Address address;
+    private Long addressId;
 
     public Long getId() {
         return id;
@@ -33,11 +32,11 @@ public class TransitAddress {
         this.transit = transit;
     }
 
-    public Address getAddress() {
-        return address;
+    public Long getAddressId() {
+        return addressId;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 }

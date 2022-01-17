@@ -22,7 +22,7 @@ public class TransitAddressService {
 
     public TransitAddress make(Transit transit, Address address){
         TransitAddress transitAddress = new TransitAddress();
-        transitAddress.setAddress(address);
+        transitAddress.setAddressId(address.getId());
         transitAddress.setTransit(transit);
         return save(transitAddress);
     }

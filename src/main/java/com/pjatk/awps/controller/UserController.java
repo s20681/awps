@@ -50,8 +50,8 @@ public class UserController {
     }
 
     @GetMapping("get")
-    public Person get(@RequestParam Long personId){
-        return userService.get(personId);
+    public Person get(@RequestParam Long userId){
+        return userService.get(userId);
     }
 
     @GetMapping("getlist")

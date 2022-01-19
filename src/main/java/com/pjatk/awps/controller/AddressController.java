@@ -19,7 +19,7 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @GetMapping
+    @GetMapping("get")
     public Address get(@RequestParam Long addressId){
         return addressService.get(addressId);
     }

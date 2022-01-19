@@ -52,4 +52,12 @@ public class AddressService {
     public Optional<Address> findById(Long addressId) {
         return addressRepository.findById(addressId);
     }
+
+    public Address get(Long addressId){
+        Optional<Address> optional = findById(addressId);
+        if(optional.isPresent())
+            return optional.get();
+        throw new ApiRequestException("No adresses found.");
+    }
+
 }

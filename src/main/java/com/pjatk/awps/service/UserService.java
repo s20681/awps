@@ -25,10 +25,6 @@ public class UserService{
         this.addressService = addressService;
     }
 
-    public Optional<Person> findById(Long id){
-        return userRepository.findById(id);
-    }
-
     public ResponseEntity<?> register(Person person){
         if(person.getLogin().isEmpty() || person.getPassword().isEmpty()){
             throw new ApiRequestException("Login, password and email fields cannot be empty!");
@@ -119,7 +115,14 @@ public class UserService{
         return userRepository.findAll();
     }
 
-    public Person getSample(){
-        return userRepository.findAll().get(0);
+    public Optional<Person> findById(Long id){
+        return userRepository.findById(id);
+    }
+
+    public Person get(Long personId) {
+        Optional<Person> optional = findById(personId);
+        if(optional.isPresent())
+            return optional.get();
+        throw new ApiRequestException("None found.");
     }
 }

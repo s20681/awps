@@ -19,6 +19,11 @@ public class AddressController {
         this.addressService = addressService;
     }
 
+    @GetMapping
+    public Address get(@RequestParam Long addressId){
+        return addressService.get(addressId);
+    }
+
     @PostMapping("save")
     public Address set(@RequestBody Address address){
         return addressService.save(address);
